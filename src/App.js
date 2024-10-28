@@ -1,25 +1,27 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import EventDetailsModal from './components/EventDetailsModal';
+import EventList from './components/EventList';
+import SearchBar from './components/SearchBar';
+import { EventProvider } from './context/EventContext';
 import './App.css';
 
-function App() {
+const App = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleSearch = (term) => {
+    setSearchTerm(term);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <EventProvider>
+      <div className="container">
+        <h1>EventSpot Lite</h1>
+        <SearchBar onSearch={handleSearch} />
+        <EventList searchTerm={searchTerm} />
+        <EventDetailsModal />
+      </div>
+    </EventProvider>
   );
-}
+};
 
 export default App;
